@@ -72,7 +72,7 @@ class Input extends React.Component {
   }
 
   _getOptions() {
-    return this.props.options;
+    return this.props.maskOptions;
   }
 
   _mustUpdateValue(newValue) {
@@ -80,7 +80,7 @@ class Input extends React.Component {
   }
 
   _resolveMaskHandler() {
-    this._maskHandler = MaskResolver.resolve(this.props.type);
+    this._maskHandler = MaskResolver.resolve(this.props.maskType);
   }
 
   _bindProps(nextProps) {
@@ -214,26 +214,9 @@ class Input extends React.Component {
       outputRange: [0, -15, 0, 15, 0, -15, 0],
     });
 
-    let Input = TextInput
-    let customTextInputProps = {}
-
-    if (this.props.customTextInput) {
-        Input = this.props.customTextInput
-        customTextInputProps = this.props.customTextInputProps || {}
-    }
-
     return (
-      <View 
-      style={StyleSheet.flatten([styles.container, containerStyle])}
-      // ref={ref => {
-      //               if (ref) {
-      //                   this._inputElement = ref
-
-      //                   if (typeof this.props.refInput === 'function') {
-      //                       this.props.refInput(ref)
-      //                   }
-      //               }
-      //           }}
+      <View
+        style={StyleSheet.flatten([styles.container, containerStyle])}
       >
         {renderText(
           label,
@@ -275,11 +258,7 @@ class Input extends React.Component {
             ])}
             keyboardType={this._getKeyboardType()}
             onChangeText={text => this._onChangeText(text)}
-            value={
-                    this.getDisplayValueFor(
-                        this.props.value
-                    )
-                }
+            value={this.getDisplayValueFor(this.props.value)}
           />
 
           {rightIcon && (
@@ -354,7 +333,8 @@ const styles = {
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 15,
+    marginLeft: 10,
+    marginRight: 10
   },
   input: {
     alignSelf: 'center',

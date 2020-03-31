@@ -880,6 +880,17 @@ export interface InputProps extends TextInputProperties {
    *  props to be passed to the React Native Text component used to display the label (optional)
    */
   labelProps?: TextProps;
+
+  //MASK itens
+
+  maskType?: TextInputMaskTypeProp;
+
+  maskOptions?: TextInputMaskOptionProp;
+
+  includeRawValueInChangeText?: boolean
+
+
+
 }
 
 export class Input extends React.Component<InputProps> {
@@ -2074,14 +2085,41 @@ export function withTheme<P = {}, T = {}>(
   component: React.ComponentType<P & ThemeProps<T>>
 ): React.ComponentClass<Omit<P, keyof ThemeProps<T>>>;
 
-export type MaskType =
-  | 'cel-phone'
-  | 'cnpj'
-  | 'cpf'
-  | 'credit-card'
-  | 'custom'
-  | 'datetime'
-  | 'money'
-  | 'only-numbers'
-  | 'zip-code'
-  | string;
+export type TextInputMaskTypeProp =
+    | 'credit-card'
+    | 'cpf'
+    | 'cnpj'
+    | 'zip-code'
+    | 'only-numbers'
+    | 'money'
+    | 'cel-phone'
+    | 'datetime'
+    | 'custom'
+
+    export interface TextInputMaskOptionProp {
+      // Money type.
+      precision?: number
+      separator?: string
+      delimiter?: string
+      unit?: string
+      suffixUnit?: string
+      zeroCents?: boolean
+  
+      // Phone type.
+      withDDD?: boolean
+      dddMask?: string
+      maskType?: 'BRL' | 'INTERNATIONAL'
+  
+      // Datetime type.
+      format?: string
+  
+      // Credit card type.
+      obfuscated?: boolean
+      issuer?: 'visa-or-mastercard' | 'diners' | 'amex'
+  
+      // Custom type.
+      mask?: string
+      validator?: (value: string, settings: TextInputMaskOptionProp) => boolean
+      getRawValue?: (value: string, settings: TextInputMaskOptionProp) => any
+      translation?: { [s: string]: (val: string) => string | null | undefined }
+  }    
